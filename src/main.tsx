@@ -3,9 +3,27 @@ import "./index.css";
 import App from "./App.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store.ts";
+import { ThemeProvider } from "@mui/material/styles";
+import { useAppSelector } from "./hooks";
+import { darkTheme, lightTheme } from "./utils";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./utils/i18n.ts";
+
+const Root = () => {
+  const theme = useAppSelector((state) => state.themeState.theme);
+  const currentTheme = theme === "dark" ? darkTheme : lightTheme;
+
+  return (
+    <ThemeProvider theme={currentTheme}>
+      <I18nextProvider i18n={i18n}>
+        <App />
+      </I18nextProvider>
+    </ThemeProvider>
+  );
+};
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
-    <App />
+    <Root />
   </Provider>
 );

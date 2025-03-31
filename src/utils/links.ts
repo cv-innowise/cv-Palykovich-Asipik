@@ -5,16 +5,17 @@ import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
 import { ComponentType } from "react";
 
 type Links = {
-  title: string;
+  titleKey: string;
   url: string;
   icon: ComponentType;
 };
+
 export const links: Links[] = [
-  { title: "Employees", url: "/", icon: GroupIcon },
-  { title: "Skills", url: "/skills", icon: TrendingUpIcon },
-  { title: "Languages", url: "/languages", icon: TranslateIcon },
+  { titleKey: "links.employees", url: "/", icon: GroupIcon },
+  { titleKey: "links.skills", url: "/skills", icon: TrendingUpIcon },
+  { titleKey: "links.languages", url: "/languages", icon: TranslateIcon },
   {
-    title: "CVs",
+    titleKey: "links.cvs",
     url: "/cvs",
     icon: ContactPageOutlinedIcon,
   },

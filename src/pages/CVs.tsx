@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const CVs = () => {
-  return <div>CVs</div>;
+  const { t } = useTranslation();
+  return <div>{t("links.cvs")}</div>;
 };
 export default CVs;
