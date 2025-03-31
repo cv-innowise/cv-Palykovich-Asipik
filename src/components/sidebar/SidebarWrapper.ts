@@ -24,10 +24,8 @@ const Wrapper = styled.aside`
     min-height: 3.5rem;
     padding: 0 1rem;
     border-radius: 0 1.75rem 1.75rem 0;
-    &:hover {
-      background-color: var(--black-background-light);
-      border-radius: 0 1.75rem 1.75rem 0;
-    }
+    line-height: ${toRem(24)};
+    letter-spacing: ${toRem(0.15)};
   }
   .listItemIcon {
     min-width: 0;
@@ -40,10 +38,6 @@ const Wrapper = styled.aside`
     left: 0.325rem;
     right: 0;
   }
-  .outletBox {
-    flex-grow: 1;
-    padding: 0;
-  }
   .iconButton {
     justify-content: center;
   }
@@ -55,9 +49,7 @@ const Wrapper = styled.aside`
     left: 0;
     right: 0;
     justify-content: space-between;
-    background-color: var(--white);
     padding: 0.625rem 0.625rem 0 0.625rem;
-    box-shadow: var(--shadow-1);
     @media (max-width: ${toRem(768)}) {
       display: flex;
     }
@@ -69,7 +61,6 @@ const Wrapper = styled.aside`
     padding: 0 1.5rem 0 1rem;
     border-radius: 1.75rem;
     &:hover {
-      background-color: var(--black-background-light);
       border-radius: 1.75rem;
     }
   }

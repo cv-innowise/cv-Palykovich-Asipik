@@ -1,8 +1,7 @@
 import { useRouteError, isRouteErrorResponse, Link } from "react-router-dom";
-import { Button, Typography, Box } from "@mui/material";
+import { Button, Typography, Box, useTheme } from "@mui/material";
 import styled from "styled-components";
 import { toRem } from "../utils";
-
 
 const ErrorContainer = styled(Box)`
   display: flex;
@@ -15,13 +14,18 @@ const ErrorContainer = styled(Box)`
 
 const Error = () => {
   const error = useRouteError();
+  const theme = useTheme();
 
   if (isRouteErrorResponse(error) && error.status === 404) {
     return (
       <ErrorContainer>
         <Typography
           variant="h1"
-          sx={{ fontSize: "9rem", fontWeight: 600, color: "var(--red)" }}
+          sx={{
+            fontSize: "9rem",
+            fontWeight: 600,
+            color: theme.palette.error.dark,
+          }}
         >
           404
         </Typography>

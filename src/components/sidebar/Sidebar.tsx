@@ -11,11 +11,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { links } from "../../utils";
 import Wrapper from "./SidebarWrapper";
 import UserLogo from "../userLogo/UserLogo";
 import UserMenu from "../userMenu/UserMenu";
+import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const drawerWidth = 12.5;
 
@@ -49,6 +51,9 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+  "& .MuiDrawer-paper": {
+    backgroundColor: theme.palette.background.default,
+  },
   variants: [
     {
       props: { open: true },
@@ -70,6 +75,8 @@ const Drawer = styled(MuiDrawer, {
 export default function Sidebar() {
   const [open, setOpen] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const theme = useTheme();
+  const { t } = useTranslation();
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -89,41 +96,46 @@ export default function Sidebar() {
         <Drawer variant="permanent" open={open} className="drawer">
           <Divider />
           <List className="list">
-            {links.map(({ title, url, icon: Icon }) => (
-              <ListItem key={title} disablePadding className="listItem">
+            {links.map(({ titleKey, url, icon: Icon }) => (
+              <ListItem key={titleKey} disablePadding className="listItem">
                 <NavLink
                   to={url}
                   style={({ isActive }) => ({
                     textDecoration: "none",
-                    color: isActive ? "var(--black)" : "var(--black-light)",
+                    color: isActive
+                      ? theme.palette.text.primary
+                      : theme.palette.text.secondary,
                   })}
                 >
                   {({ isActive }) => (
                     <ListItemButton
                       sx={{
                         backgroundColor: isActive
-                          ? "var(--black-background-light)"
+                          ? theme.palette.action.selected
                           : "transparent",
+                        "&:hover": {
+                          backgroundColor: theme.palette.action.hover, // Цвет фона при наведении
+                        },
                       }}
                       className="listItemButton"
                     >
                       <ListItemIcon
                         sx={{
                           color: isActive
-                            ? "var(--black)"
-                            : "var(--black-light)",
+                            ? theme.palette.text.primary
+                            : theme.palette.text.secondary,
                         }}
                         className="listItemIcon"
                       >
                         <Icon />
                       </ListItemIcon>
                       <ListItemText
-                        primary={title}
+                        primary={t(titleKey)}
                         sx={{
                           opacity: open ? 1 : 0,
-                          color: isActive
-                            ? "var(--black)"
-                            : "var(--black-light)",
+                          transition: theme.transitions.create("opacity", {
+                            duration: theme.transitions.duration.short,
+                          }),
                         }}
                       />
                     </ListItemButton>
@@ -139,7 +151,9 @@ export default function Sidebar() {
           >
             <ListItemButton
               sx={{
-                "&:hover": "var(--black-background-light)",
+                "&:hover": {
+                  backgroundColor: theme.palette.action.hover,
+                },
               }}
               className="listItemButton"
             >
@@ -151,49 +165,61 @@ export default function Sidebar() {
             <IconButton onClick={toggleDrawer} className="iconButton">
               <KeyboardArrowLeftIcon
                 sx={{
-                  transition: "transform 0.3s ease",
+                  transition: theme.transitions.create("opacity", {
+                    duration: theme.transitions.duration.short,
+                  }),
                   transform: open ? "rotate(0deg)" : "rotate(180deg)",
                 }}
               />
             </IconButton>
           </Box>
         </Drawer>
-        <Box component="main" className="outletBox">
-          <Outlet />
-        </Box>
         <Box className="bottomBar">
-          {links.map(({ title, url, icon: Icon }) =>
-            title === "CVs" ? null : (
+          {links.map(({ titleKey, url, icon: Icon }) =>
+            titleKey === "CVs" ? null : (
               <NavLink
-                key={title}
+                key={titleKey}
                 to={url}
                 style={({ isActive }) => ({
                   textDecoration: "none",
-                  color: isActive ? "var(--black)" : "var(--black-light)",
+                  color: isActive
+                    ? theme.palette.text.primary
+                    : theme.palette.text.secondary,
                 })}
               >
                 {({ isActive }) => (
                   <ListItemButton
                     sx={{
                       backgroundColor: isActive
-                        ? "var(--black-background-light)"
+                        ? theme.palette.action.selected
                         : "transparent",
+                      transition: theme.transitions.create("background-color", {
+                        duration: theme.transitions.duration.short, // Плавный переход
+                      }),
+                      marginTop: "8px",
                     }}
                     className="iconButtonBottomBar"
                   >
                     <ListItemIcon
                       sx={{
-                        color: isActive ? "var(--black)" : "var(--black-light)",
+                        color: isActive
+                          ? theme.palette.text.primary
+                          : theme.palette.text.secondary,
                       }}
                       className="listItemIconBottom"
                     >
                       <Icon />
                     </ListItemIcon>
                     <ListItemText
-                      primary={title}
+                      primary={t(titleKey)}
                       sx={{
                         opacity: open ? 1 : 0,
-                        color: isActive ? "var(--black)" : "var(--black-light)",
+                        color: isActive
+                          ? theme.palette.text.primary
+                          : theme.palette.text.secondary,
+                        transition: theme.transitions.create("opacity", {
+                          duration: theme.transitions.duration.short,
+                        }),
                       }}
                       className="listItemTextBottom"
                     />
@@ -206,8 +232,12 @@ export default function Sidebar() {
             <ListItem disablePadding className="listItem" onClick={handleClick}>
               <ListItemButton
                 sx={{
-                  "&:hover": "var(--black-background-light)",
-                  marginTop: "-8px",
+                  "&:hover": {
+                    backgroundColor: theme.palette.action.hover,
+                  },
+                  transition: theme.transitions.create("background-color", {
+                    duration: theme.transitions.duration.short,
+                  }),
                 }}
                 className="iconButtonBottomBar"
               >

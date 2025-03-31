@@ -5,6 +5,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Divider } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface UserMenuProps {
   anchorEl: null | HTMLElement;
@@ -12,6 +14,8 @@ interface UserMenuProps {
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, onClose }) => {
+  const theme = useTheme();
+  const { t } = useTranslation();
   return (
     <Menu
       anchorEl={anchorEl}
@@ -29,19 +33,23 @@ const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, onClose }) => {
         <AccountCircleIcon
           style={{
             marginRight: 8,
-            color: "var(--black-light)",
+            color: theme.palette.text.secondary,
           }}
         />
-        Profile
+        {t("userMenu.profile")}
       </MenuItem>
       <MenuItem onClick={onClose} component={Link} to="/settings">
-        <SettingsIcon style={{ marginRight: 8, color: "var(--black-light)" }} />
-        Settings
+        <SettingsIcon
+          style={{ marginRight: 8, color: theme.palette.text.secondary }}
+        />
+        {t("userMenu.settings")}
       </MenuItem>
       <Divider />
       <MenuItem onClick={onClose}>
-        <LogoutIcon style={{ marginRight: 8, color: "var(--black-light)" }} />
-        Logout
+        <LogoutIcon
+          style={{ marginRight: 8, color: theme.palette.text.secondary }}
+        />
+        {t("userMenu.logout")}
       </MenuItem>
     </Menu>
   );

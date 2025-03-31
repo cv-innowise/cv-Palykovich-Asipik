@@ -1,23 +1,19 @@
 import { useRouteError } from "react-router-dom";
-import { Typography, Box } from "@mui/material";
-import styled from "styled-components";
-
-
-const ErrorContainer = styled(Box)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: var(--red);
-`;
+import { Typography, useTheme } from "@mui/material";
+import { ErrorContainer } from "./ErrorElementWrapper";
 
 const ErrorElement = () => {
   const error = useRouteError();
   console.log(error);
-
+  const theme = useTheme();
   return (
     <ErrorContainer>
-      <Typography variant="h3" align="center" fontWeight="bold">
+      <Typography
+        variant="h3"
+        align="center"
+        fontWeight="bold"
+        style={{ color: theme.palette.error.dark }}
+      >
         There is an error...
       </Typography>
     </ErrorContainer>
