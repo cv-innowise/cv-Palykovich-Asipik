@@ -176,7 +176,7 @@ export default function Sidebar() {
         </Drawer>
         <Box className="bottomBar">
           {links.map(({ titleKey, url, icon: Icon }) =>
-            titleKey === "CVs" ? null : (
+            titleKey === "links.cvs" ? null : (
               <NavLink
                 key={titleKey}
                 to={url}
