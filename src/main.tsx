@@ -8,6 +8,8 @@ import { useAppSelector } from "./hooks";
 import { darkTheme, lightTheme } from "./utils";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./utils/i18n.ts";
+import { ApolloProvider } from "@apollo/client";
+import client from "./ApolloClient.ts";
 
 const Root = () => {
   const theme = useAppSelector((state) => state.themeState.theme);
@@ -24,6 +26,8 @@ const Root = () => {
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
-    <Root />
+    <ApolloProvider client={client}>
+      <Root />
+    </ApolloProvider>
   </Provider>
 );
