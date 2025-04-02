@@ -1,6 +1,7 @@
-import { Outlet } from "react-router-dom";
-import { Sidebar } from "../components";
-const HomeLayout = () => {
+import { Outlet } from 'react-router-dom';
+import { Sidebar } from '../../components';
+
+export const HomeLayout = () => {
   return (
     <div className="wrapper">
       <main className="main">
@@ -12,5 +13,3 @@ const HomeLayout = () => {
     </div>
   );
 };
-
-export default HomeLayout;
