@@ -5,4 +5,4 @@ export { default as ErrorElement } from './errorElement/ErrorElement';
 export { default as ThemeSelector } from './themeSelector/ThemeSelector';
 export { default as LanguageSelector } from './languageSelector/LanguageSelector';
 export * from './CustomTab/CustomTab';
-export * from './LoginForm/LoginForm';
+export * from './AuthForm/AuthForm';

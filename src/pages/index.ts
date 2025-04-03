@@ -1,5 +1,5 @@
-export { default as Register } from './Register';
-export { default as Login } from './Login';
+export * from './Register';
+export * from './Login';
 export * from './layouts/HomeLayout';
 export * from './layouts/AuthLayout';
 export { default as Employees } from './Employees';
