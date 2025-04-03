@@ -8,7 +8,8 @@ import {
   InputAdornment,
   IconButton,
 } from '@mui/material';
-import { StyledLoginBox } from './AuthFormWrapper';
+import { StyledAuthBox } from './AuthFormWrapper';
+import { useTranslation } from 'react-i18next';
 
 interface AuthFormProps {
   buttonType: 'reg' | 'log';
@@ -20,11 +21,10 @@ export interface AuthFormInputs {
   password: string;
 }
 
-
 export const AuthForm = ({ buttonType, onSubmit }: AuthFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
+  const { t } = useTranslation();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -39,12 +39,12 @@ export const AuthForm = ({ buttonType, onSubmit }: AuthFormProps) => {
       await onSubmit(data);
     } catch (error) {
       console.error(error);
-      setErrorMessage("Invalid email or password.");
+      setErrorMessage('Invalid email or password.');
     }
   };
 
   return (
-    <StyledLoginBox>
+    <StyledAuthBox>
       {errorMessage && (
         <Typography color="error" align="center">
           {errorMessage}
@@ -52,34 +52,33 @@ export const AuthForm = ({ buttonType, onSubmit }: AuthFormProps) => {
       )}
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <TextField
-          label="Email"
+          label={t('auth.form.email')}
           fullWidth
           {...register('email', {
-            required: 'Email is required',
+            required: t('auth.form.emailRequired'),
             pattern: {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-              message: 'Invalid email address',
+              message: t('auth.form.emailPattern'),
             },
           })}
           error={!!errors.email}
           helperText={errors.email?.message}
         />
         <TextField
-          label="Password"
+          label={t('auth.form.password')}
           type={showPassword ? 'text' : 'password'}
           fullWidth
           {...register('password', {
-            required: 'Password is required',
+            required: t('auth.form.passwordRequired'),
             minLength: {
               value: 6,
-              message: 'Password must be at least 6 characters',
+              message: t('auth.form.passwordPattern'),
             },
           })}
           error={!!errors.password}
           helperText={errors.password?.message}
           slotProps={{
             input: {
-
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
@@ -91,7 +90,7 @@ export const AuthForm = ({ buttonType, onSubmit }: AuthFormProps) => {
                   </IconButton>
                 </InputAdornment>
               ),
-            }
+            },
           }}
         />
 
@@ -99,12 +98,14 @@ export const AuthForm = ({ buttonType, onSubmit }: AuthFormProps) => {
           type="submit"
           variant="contained"
           color="primary"
-           disabled={isSubmitting}
+          disabled={isSubmitting}
           onClick={handleSubmit(onSubmit)}
         >
-          {buttonType === 'reg' ? 'Create account' : "Log in"}
-        </Button> 
-        </form>
-    </StyledLoginBox>
+          {buttonType === 'reg'
+            ? t('auth.register.submitButton')
+            : t('auth.login.submitButton')}
+        </Button>
+      </form>
+    </StyledAuthBox>
   );
 };

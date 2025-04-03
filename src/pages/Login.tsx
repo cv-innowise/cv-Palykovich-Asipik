@@ -1,36 +1,45 @@
 import { Button, Typography } from '@mui/material';
 import { AuthForm, AuthFormInputs } from '../components';
 import { Container, styled } from '@mui/system';
+import { toRem } from '../utils';
+import { useTranslation } from 'react-i18next';
 
-const ContainerStyled = styled(Container)`
+const StyledContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  max-width: 560px;
+  max-width: ${toRem(560)};
+  padding: 0;
+`;
+
+const StyledButton = styled(Button)`
+  min-width: ${toRem(220)};
+  border-radius: ${toRem(40)};
+  margin-top: ${toRem(8)};
+  color: ${({ theme }) => theme.palette.text.primary};
+`;
+
+const StyledText = styled(Typography)`
+  margin: ${toRem(24)} 0 ${toRem(40)};
 `;
 
 export const Login = () => {
+  const { t } = useTranslation();
 
-  const handleSubmit = (data: AuthFormInputs)=>{
+  const handleSubmit = (data: AuthFormInputs) => {
     console.log(data);
-   } 
+  };
 
   return (
-    <ContainerStyled >
+    <StyledContainer>
       <Typography variant="h4" align="center">
-        Welcome back
+        {t('auth.login.title')}
       </Typography>
-      <Typography variant="h6" align="center">
-        Hello again! Log in to continue
-      </Typography>
-      <AuthForm buttonType={'log'} onSubmit={handleSubmit } />
-      <Typography align="center">
-          Have an account?
-          <Button variant="text" size="small">
-            Sign in
-          </Button>
-        </Typography>
-    </ContainerStyled>
+      <StyledText variant="subtitle1" align="center">
+        {t('auth.login.text')}
+      </StyledText>
+      <AuthForm buttonType="log" onSubmit={handleSubmit} />
+      <StyledButton variant="text">{t('auth.login.extraButton')}</StyledButton>
+    </StyledContainer>
   );
 };

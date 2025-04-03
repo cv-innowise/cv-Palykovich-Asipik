@@ -1,24 +1,32 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import { AppTheme } from '../../utils';
 import { CustomTab } from '../../components/CustomTab/CustomTab';
+import { Container } from '@mui/material';
 
-const Wrapper = styled.div<{ theme: AppTheme }>`
-display: flex;
-flex-direction: column;
-min-height: 100vh;
-align-items: center;
-/* justify-content: center; */
-  padding: ${({ theme }) =>theme.spacing(2)};
+const Wrapper = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
   background-color: ${({ theme }) => theme.palette.background.default};
   color: ${({ theme }) => theme.palette.text.primary};
+`;
+
+const Content = styled.div`
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
 
 export const AuthLayout = () => {
   return (
     <Wrapper>
       <CustomTab />
-      <Outlet />
+      <Content>
+        <Outlet />
+      </Content>
     </Wrapper>
   );
 };

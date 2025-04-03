@@ -1,21 +1,20 @@
-import { styled } from "@mui/material/styles";
-import { Box } from "@mui/material";
-import { toRem } from "../../utils";
+import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
+import { toRem } from '../../utils';
 
-export const StyledLoginBox = styled(Box)(({ theme }) => ({
-    marginTop: theme.spacing(5),
-    width: '100%',
+export const StyledAuthBox = styled(Box)`
+  width: 100%;
 
-    "& form": {
-        display: "flex",
-        flexDirection: "column",
-        gap: theme.spacing(2.5),
-    },
+  && form {
+    display: flex;
+    flex-direction: column;
+    gap: ${toRem(20)};
+  }
 
-    "& button[type='submit']": {
-        width: 'fit-content',
-        minWidth: toRem(220),
-        margin: `${theme.spacing(5)} auto 0`,
-    },
-})
-);
+  && button[type='submit'] {
+    width: fit-content;
+    min-width: ${toRem(220)};
+    margin: ${toRem(40)} auto 0;
+    border-radius: ${toRem(40)};
+  }
+`;

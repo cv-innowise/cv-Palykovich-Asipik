@@ -1,11 +1,29 @@
-import { Tab, Tabs, useTheme } from '@mui/material';
+import { styled, Tab, Tabs } from '@mui/material';
 import { SyntheticEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toRem } from '../../utils';
+import { useTranslation } from 'react-i18next';
+
+const StyledTabs = styled(Tabs)(({ theme }) => ({
+  margin: toRem(8),
+  color: theme.palette.text.primary,
+  '& .MuiTabs-indicator': {
+    backgroundColor: theme.palette.primary.main,
+  },
+}));
+
+const StyledTab = styled(Tab)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  minWidth: toRem(150),
+  '&.Mui-selected': {
+    color: theme.palette.primary.main,
+  },
+}));
 
 export const CustomTab = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const theme = useTheme();
+  const { t } = useTranslation();
 
   const activeTab =
     location.pathname === '/auth/register' ? 'register' : 'login';
@@ -14,30 +32,15 @@ export const CustomTab = () => {
     navigate(`/auth/${newValue}`);
   };
 
-  const tabStyles = {
-    color: theme.palette.text.primary,
-    minWidth: 150,
-    '&.Mui-selected': {
-      color: theme.palette.primary.main,
-    },
-  };
-
   return (
-    <Tabs
+    <StyledTabs
       value={activeTab}
       onChange={handleChange}
       aria-label="auth tabs"
       centered
-      sx={{
-        margin: theme.spacing(2),
-        color: theme.palette.text.primary,
-        '& .MuiTabs-indicator': {
-          backgroundColor: theme.palette.primary.main,
-        },
-      }}
     >
-      <Tab value="login" label="log in" sx={tabStyles} />
-      <Tab value="register" label="sign up" sx={tabStyles} />
-    </Tabs>
+      <StyledTab value="login" label={t('auth.login.tab')} />
+      <StyledTab value="register" label={t('auth.register.tab')} />
+    </StyledTabs>
   );
 };
