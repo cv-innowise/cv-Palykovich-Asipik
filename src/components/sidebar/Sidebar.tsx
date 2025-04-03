@@ -1,57 +1,57 @@
-import * as React from "react";
-import { styled, Theme, CSSObject } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import MuiDrawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { NavLink } from "react-router-dom";
-import { links } from "../../utils";
-import Wrapper from "./SidebarWrapper";
-import UserLogo from "../userLogo/UserLogo";
-import UserMenu from "../userMenu/UserMenu";
-import { useTheme } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import * as React from 'react';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiDrawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import { NavLink } from 'react-router-dom';
+import { links } from '../../utils';
+import Wrapper from './SidebarWrapper';
+import UserLogo from '../UserLogo/UserLogo';
+import UserMenu from '../UserMenu/UserMenu';
+import { useTheme } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const drawerWidth = 12.5;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: `${drawerWidth}rem`,
-  transition: theme.transitions.create("width", {
+  transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: "hidden",
-  border: "none",
+  overflowX: 'hidden',
+  border: 'none',
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
+  transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  overflowX: "hidden",
+  overflowX: 'hidden',
   width: `calc(${theme.spacing(7)} + 0.0625rem)`,
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 0.0625rem)`,
   },
-  border: "none",
+  border: 'none',
 });
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme }) => ({
   width: `${drawerWidth}rem`,
   flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  "& .MuiDrawer-paper": {
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  '& .MuiDrawer-paper': {
     backgroundColor: theme.palette.background.default,
   },
   variants: [
@@ -59,14 +59,14 @@ const Drawer = styled(MuiDrawer, {
       props: { open: true },
       style: {
         ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme),
+        '& .MuiDrawer-paper': openedMixin(theme),
       },
     },
     {
       props: { open: false },
       style: {
         ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme),
+        '& .MuiDrawer-paper': closedMixin(theme),
       },
     },
   ],
@@ -101,7 +101,7 @@ export default function Sidebar() {
                 <NavLink
                   to={url}
                   style={({ isActive }) => ({
-                    textDecoration: "none",
+                    textDecoration: 'none',
                     color: isActive
                       ? theme.palette.text.primary
                       : theme.palette.text.secondary,
@@ -112,8 +112,8 @@ export default function Sidebar() {
                       sx={{
                         backgroundColor: isActive
                           ? theme.palette.action.selected
-                          : "transparent",
-                        "&:hover": {
+                          : 'transparent',
+                        '&:hover': {
                           backgroundColor: theme.palette.action.hover, // Цвет фона при наведении
                         },
                       }}
@@ -133,7 +133,7 @@ export default function Sidebar() {
                         primary={t(titleKey)}
                         sx={{
                           opacity: open ? 1 : 0,
-                          transition: theme.transitions.create("opacity", {
+                          transition: theme.transitions.create('opacity', {
                             duration: theme.transitions.duration.short,
                           }),
                         }}
@@ -151,7 +151,7 @@ export default function Sidebar() {
           >
             <ListItemButton
               sx={{
-                "&:hover": {
+                '&:hover': {
                   backgroundColor: theme.palette.action.hover,
                 },
               }}
@@ -165,10 +165,10 @@ export default function Sidebar() {
             <IconButton onClick={toggleDrawer} className="iconButton">
               <KeyboardArrowLeftIcon
                 sx={{
-                  transition: theme.transitions.create("opacity", {
+                  transition: theme.transitions.create('opacity', {
                     duration: theme.transitions.duration.short,
                   }),
-                  transform: open ? "rotate(0deg)" : "rotate(180deg)",
+                  transform: open ? 'rotate(0deg)' : 'rotate(180deg)',
                 }}
               />
             </IconButton>
@@ -176,12 +176,12 @@ export default function Sidebar() {
         </Drawer>
         <Box className="bottomBar">
           {links.map(({ titleKey, url, icon: Icon }) =>
-            titleKey === "links.cvs" ? null : (
+            titleKey === 'links.cvs' ? null : (
               <NavLink
                 key={titleKey}
                 to={url}
                 style={({ isActive }) => ({
-                  textDecoration: "none",
+                  textDecoration: 'none',
                   color: isActive
                     ? theme.palette.text.primary
                     : theme.palette.text.secondary,
@@ -192,11 +192,11 @@ export default function Sidebar() {
                     sx={{
                       backgroundColor: isActive
                         ? theme.palette.action.selected
-                        : "transparent",
-                      transition: theme.transitions.create("background-color", {
+                        : 'transparent',
+                      transition: theme.transitions.create('background-color', {
                         duration: theme.transitions.duration.short, // Плавный переход
                       }),
-                      marginTop: "8px",
+                      marginTop: '8px',
                     }}
                     className="iconButtonBottomBar"
                   >
@@ -217,7 +217,7 @@ export default function Sidebar() {
                         color: isActive
                           ? theme.palette.text.primary
                           : theme.palette.text.secondary,
-                        transition: theme.transitions.create("opacity", {
+                        transition: theme.transitions.create('opacity', {
                           duration: theme.transitions.duration.short,
                         }),
                       }}
@@ -232,10 +232,10 @@ export default function Sidebar() {
             <ListItem disablePadding className="listItem" onClick={handleClick}>
               <ListItemButton
                 sx={{
-                  "&:hover": {
+                  '&:hover': {
                     backgroundColor: theme.palette.action.hover,
                   },
-                  transition: theme.transitions.create("background-color", {
+                  transition: theme.transitions.create('background-color', {
                     duration: theme.transitions.duration.short,
                   }),
                 }}
