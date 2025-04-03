@@ -18,7 +18,9 @@ const Error = () => {
 
   if (isRouteErrorResponse(error) && error.status === 404) {
     return (
-      <ErrorContainer>
+      <ErrorContainer
+        style={{ backgroundColor: theme.palette.background.default }}
+      >
         <Typography
           variant="h1"
           sx={{
@@ -31,11 +33,23 @@ const Error = () => {
         </Typography>
         <Typography
           variant="h2"
-          sx={{ fontSize: "3rem", fontWeight: "bold", textAlign: "center" }}
+          sx={{
+            fontSize: "3rem",
+            fontWeight: "bold",
+            textAlign: "center",
+            color: theme.palette.text.primary,
+          }}
         >
           Page is not found
         </Typography>
-        <Typography variant="body1" sx={{ fontSize: "2rem", fontWeight: 500 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: "2rem",
+            fontWeight: 500,
+            color: theme.palette.text.primary,
+          }}
+        >
           Sorry, we could not find the page.
         </Typography>
         <Button variant="outlined" size="large" component={Link} to="/">
