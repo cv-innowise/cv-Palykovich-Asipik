@@ -3,6 +3,8 @@ import { AuthForm, AuthFormInputs } from '../components';
 import { Container, styled } from '@mui/system';
 import { toRem } from '../utils';
 import { useTranslation } from 'react-i18next';
+import { useLazyQuery } from '@apollo/client';
+import { LOGIN } from '../services/queries/login';
 
 const StyledContainer = styled(Container)`
   display: flex;
@@ -26,8 +28,27 @@ const StyledText = styled(Typography)`
 export const Login = () => {
   const { t } = useTranslation();
 
-  const handleSubmit = (data: AuthFormInputs) => {
+  const [login, { loading, error }] = useLazyQuery(LOGIN);
+
+  const handleSubmit = async (data: AuthFormInputs) => {
     console.log(data);
+
+    try {
+      const response = await login({
+        variables: {
+          email: data.email,
+          password: data.password,
+        },
+      });
+      if (response.data) {
+        const { access_token } = response.data.login;
+        localStorage.setItem('access_token', access_token);
+        console.log('enter');
+        // navigate('/'); // Перенаправление после успешного логина
+      }
+    } catch (err) {
+      console.error('Ошибка входа:', err);
+    }
   };
 
   return (
@@ -38,7 +59,12 @@ export const Login = () => {
       <StyledText variant="subtitle1" align="center">
         {t('auth.login.text')}
       </StyledText>
-      <AuthForm buttonType="log" onSubmit={handleSubmit} />
+      <AuthForm
+        buttonType="log"
+        onSubmit={handleSubmit}
+        isSubmitting={loading}
+        errorMessage={error ? error.message : null}
+      />
       <StyledButton variant="text">{t('auth.login.extraButton')}</StyledButton>
     </StyledContainer>
   );

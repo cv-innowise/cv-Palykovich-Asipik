@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 interface AuthFormProps {
   buttonType: 'reg' | 'log';
   onSubmit: (data: AuthFormInputs) => void;
+  isSubmitting?: boolean;
+  errorMessage?: string | null;
 }
 
 export interface AuthFormInputs {
@@ -21,26 +23,25 @@ export interface AuthFormInputs {
   password: string;
 }
 
-export const AuthForm = ({ buttonType, onSubmit }: AuthFormProps) => {
+export const AuthForm = ({
+  buttonType,
+  onSubmit,
+  isSubmitting,
+  errorMessage,
+}: AuthFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { t } = useTranslation();
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<AuthFormInputs>();
 
-  const handleFormSubmit = async (data: AuthFormInputs) => {
-    try {
-      await onSubmit(data);
-    } catch (error) {
-      console.error(error);
-      setErrorMessage('Invalid email or password.');
-    }
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleFormSubmit = (data: AuthFormInputs) => {
+    onSubmit(data);
   };
 
   return (
@@ -99,7 +100,6 @@ export const AuthForm = ({ buttonType, onSubmit }: AuthFormProps) => {
           variant="contained"
           color="primary"
           disabled={isSubmitting}
-          onClick={handleSubmit(onSubmit)}
         >
           {buttonType === 'reg'
             ? t('auth.register.submitButton')

@@ -3,6 +3,9 @@ import { AuthForm, AuthFormInputs } from '../components';
 import { Container, styled } from '@mui/system';
 import { toRem } from '../utils';
 import { useTranslation } from 'react-i18next';
+import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import { SIGNUP } from '../services/mutations/mutations';
 
 const ContainerStyled = styled(Container)`
   display: flex;
@@ -25,9 +28,24 @@ const Text = styled(Typography)`
 
 export const Register = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [signup, { loading, error }] = useMutation(SIGNUP);
 
-  const handleSubmit = (data: AuthFormInputs) => {
-    console.log(data);
+  const handleSubmit = async (data: AuthFormInputs) => {
+    try {
+      const response = await signup({
+        variables: {
+          auth: {
+            email: data.email,
+            password: data.password,
+          },
+        },
+      });
+      localStorage.setItem('access_token', response.data.signup.access_token);
+      navigate('/');
+    } catch (err) {
+      console.error('Ошибка регистрации:', err);
+    }
   };
 
   return (
@@ -38,7 +56,12 @@ export const Register = () => {
       <Text variant="subtitle1" align="center">
         {t('auth.register.text')}
       </Text>
-      <AuthForm buttonType={'reg'} onSubmit={handleSubmit} />
+      <AuthForm
+        buttonType="reg"
+        onSubmit={handleSubmit}
+        isSubmitting={loading}
+        errorMessage={error ? error.message : null}
+      />
       <CustomButton variant="text">
         {t('auth.register.extraButton')}
       </CustomButton>
