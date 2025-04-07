@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { useAppSelector } from './hooks';
 import { darkTheme, lightTheme } from './utils';
 import { I18nextProvider } from 'react-i18next';
-import i18n from './utils/i18n.ts';
+import i18n from './locales/i18n.ts';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './services/сlient.ts';
 
