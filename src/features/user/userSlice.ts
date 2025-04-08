@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type User = {
   id: string;
@@ -11,8 +11,10 @@ type UserState = {
 };
 
 const getUserFromLocalStorage = (): User | null => {
-  const user = localStorage.getItem("user");
-  if (!user) return null;
+  const user = localStorage.getItem('user');
+  if (!user) {
+    return null;
+  }
   return JSON.parse(user);
 };
 
@@ -21,24 +23,24 @@ const initialState: UserState = {
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     loginUser: (state, action: PayloadAction<User>) => {
       const user = action.payload;
       state.user = user;
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(user));
     },
     logoutUser: (state) => {
-      localStorage.removeItem("user");
+      localStorage.removeItem('user');
 
-      console.log(localStorage.getItem("user"));
+      console.log(localStorage.getItem('user'));
       state.user = null;
     },
     updateUser: (state, action: PayloadAction<Partial<User>>) => {
       if (state.user) {
         state.user = { ...state.user, ...action.payload };
-        localStorage.setItem("user", JSON.stringify(state.user));
+        localStorage.setItem('user', JSON.stringify(state.user));
       }
     },
   },

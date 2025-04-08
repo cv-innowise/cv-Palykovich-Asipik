@@ -1,5 +1,5 @@
-import { useTheme } from "@mui/material";
-import { Circle, UserLogoContainer, Username } from "./UserLogoWrapper";
+import { useTheme } from '@mui/material';
+import { Circle, UserLogoContainer, Username } from './UserLogoWrapper';
 
 interface UserLogoProps {
   username: string;

@@ -102,17 +102,13 @@ export default function Sidebar() {
                   to={url}
                   style={({ isActive }) => ({
                     textDecoration: 'none',
-                    color: isActive
-                      ? theme.palette.text.primary
-                      : theme.palette.text.secondary,
+                    color: isActive ? theme.palette.text.primary : theme.palette.text.secondary,
                   })}
                 >
                   {({ isActive }) => (
                     <ListItemButton
                       sx={{
-                        backgroundColor: isActive
-                          ? theme.palette.action.selected
-                          : 'transparent',
+                        backgroundColor: isActive ? theme.palette.action.selected : 'transparent',
                         '&:hover': {
                           backgroundColor: theme.palette.action.hover, // Цвет фона при наведении
                         },
@@ -144,11 +140,7 @@ export default function Sidebar() {
               </ListItem>
             ))}
           </List>
-          <ListItem
-            disablePadding
-            className="listItem logo"
-            onClick={handleClick}
-          >
+          <ListItem disablePadding className="listItem logo" onClick={handleClick}>
             <ListItemButton
               sx={{
                 '&:hover': {
@@ -182,17 +174,13 @@ export default function Sidebar() {
                 to={url}
                 style={({ isActive }) => ({
                   textDecoration: 'none',
-                  color: isActive
-                    ? theme.palette.text.primary
-                    : theme.palette.text.secondary,
+                  color: isActive ? theme.palette.text.primary : theme.palette.text.secondary,
                 })}
               >
                 {({ isActive }) => (
                   <ListItemButton
                     sx={{
-                      backgroundColor: isActive
-                        ? theme.palette.action.selected
-                        : 'transparent',
+                      backgroundColor: isActive ? theme.palette.action.selected : 'transparent',
                       transition: theme.transitions.create('background-color', {
                         duration: theme.transitions.duration.short, // Плавный переход
                       }),
@@ -202,9 +190,7 @@ export default function Sidebar() {
                   >
                     <ListItemIcon
                       sx={{
-                        color: isActive
-                          ? theme.palette.text.primary
-                          : theme.palette.text.secondary,
+                        color: isActive ? theme.palette.text.primary : theme.palette.text.secondary,
                       }}
                       className="listItemIconBottom"
                     >
@@ -214,9 +200,7 @@ export default function Sidebar() {
                       primary={t(titleKey)}
                       sx={{
                         opacity: open ? 1 : 0,
-                        color: isActive
-                          ? theme.palette.text.primary
-                          : theme.palette.text.secondary,
+                        color: isActive ? theme.palette.text.primary : theme.palette.text.secondary,
                         transition: theme.transitions.create('opacity', {
                           duration: theme.transitions.duration.short,
                         }),
@@ -241,11 +225,7 @@ export default function Sidebar() {
                 }}
                 className="iconButtonBottomBar"
               >
-                <UserLogo
-                  username="Anatoli Paliukhovich"
-                  isOpen={open}
-                  imageUrl=""
-                />
+                <UserLogo username="Anatoli Paliukhovich" isOpen={open} imageUrl="" />
               </ListItemButton>
             </ListItem>
           </List>

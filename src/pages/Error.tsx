@@ -1,7 +1,7 @@
-import { useRouteError, isRouteErrorResponse, Link } from "react-router-dom";
-import { Button, Typography, Box, useTheme } from "@mui/material";
-import styled from "styled-components";
-import { toRem } from "../utils";
+import { useRouteError, isRouteErrorResponse, Link } from 'react-router-dom';
+import { Button, Typography, Box, useTheme } from '@mui/material';
+import styled from 'styled-components';
+import { toRem } from '../utils';
 
 const ErrorContainer = styled(Box)`
   display: flex;
@@ -18,13 +18,11 @@ const Error = () => {
 
   if (isRouteErrorResponse(error) && error.status === 404) {
     return (
-      <ErrorContainer
-        style={{ backgroundColor: theme.palette.background.default }}
-      >
+      <ErrorContainer style={{ backgroundColor: theme.palette.background.default }}>
         <Typography
           variant="h1"
           sx={{
-            fontSize: "9rem",
+            fontSize: '9rem',
             fontWeight: 600,
             color: theme.palette.error.dark,
           }}
@@ -34,9 +32,9 @@ const Error = () => {
         <Typography
           variant="h2"
           sx={{
-            fontSize: "3rem",
-            fontWeight: "bold",
-            textAlign: "center",
+            fontSize: '3rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
             color: theme.palette.text.primary,
           }}
         >
@@ -45,7 +43,7 @@ const Error = () => {
         <Typography
           variant="body1"
           sx={{
-            fontSize: "2rem",
+            fontSize: '2rem',
             fontWeight: 500,
             color: theme.palette.text.primary,
           }}
@@ -61,10 +59,7 @@ const Error = () => {
 
   return (
     <ErrorContainer>
-      <Typography
-        variant="h2"
-        sx={{ fontSize: "3rem", fontWeight: "bold", textAlign: "center" }}
-      >
+      <Typography variant="h2" sx={{ fontSize: '3rem', fontWeight: 'bold', textAlign: 'center' }}>
         There is an error...
       </Typography>
     </ErrorContainer>

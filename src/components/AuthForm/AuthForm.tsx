@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import {
-  TextField,
-  Button,
-  Typography,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
+import { TextField, Button, Typography, InputAdornment, IconButton } from '@mui/material';
 import { StyledAuthBox } from './AuthFormWrapper';
 import { useTranslation } from 'react-i18next';
 
 interface AuthFormProps {
   buttonType: 'reg' | 'log';
-  onSubmit: (data: AuthFormInputs) => void;
+  onSubmit: SubmitHandler<AuthFormInputs>;
   isSubmitting?: boolean;
   errorMessage: string | null;
 }
@@ -23,17 +17,10 @@ export interface AuthFormInputs {
   password: string;
 }
 
-export const AuthForm = ({
-  buttonType,
-  onSubmit,
-  isSubmitting,
-  errorMessage,
-}: AuthFormProps) => {
+export const AuthForm = ({ buttonType, onSubmit, isSubmitting, errorMessage }: AuthFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
-  const [formError, setFormError] = useState<string | null>(
-    errorMessage ?? null
-  );
+  const [formError, setFormError] = useState<string | null>(errorMessage ?? null);
 
   useEffect(() => {
     setFormError(errorMessage);
@@ -47,17 +34,13 @@ export const AuthForm = ({
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleFormSubmit = (data: AuthFormInputs) => {
-    onSubmit(data);
-  };
-
   const handleFocus = () => {
     setFormError(null);
   };
 
   return (
     <StyledAuthBox>
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           label={t('auth.form.email')}
           fullWidth
@@ -107,15 +90,8 @@ export const AuthForm = ({
             {formError}
           </Typography>
         )}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={isSubmitting}
-        >
-          {buttonType === 'reg'
-            ? t('auth.register.submitButton')
-            : t('auth.login.submitButton')}
+        <Button type="submit" variant="contained" color="primary" disabled={isSubmitting}>
+          {buttonType === 'reg' ? t('auth.register.submitButton') : t('auth.login.submitButton')}
         </Button>
       </form>
     </StyledAuthBox>

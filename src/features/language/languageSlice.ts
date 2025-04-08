@@ -1,24 +1,24 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type LanguageState = "en" | "de" | "ru";
+type LanguageState = 'en' | 'de' | 'ru';
 
 interface LanguageSliceState {
   language: LanguageState;
 }
 
-const savedLanguage = localStorage.getItem("language") as LanguageState | null;
+const savedLanguage = localStorage.getItem('language') as LanguageState | null;
 
 const initialState: LanguageSliceState = {
-  language: savedLanguage ? savedLanguage : "en",
+  language: savedLanguage ? savedLanguage : 'en',
 };
 
 const languageSlice = createSlice({
-  name: "language",
+  name: 'language',
   initialState,
   reducers: {
     setLanguage(state, action: PayloadAction<LanguageState>) {
       state.language = action.payload;
-      localStorage.setItem("language", action.payload);
+      localStorage.setItem('language', action.payload);
     },
   },
 });

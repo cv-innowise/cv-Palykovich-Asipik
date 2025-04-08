@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { toRem } from "../../utils";
+import styled from 'styled-components';
+import { toRem } from '../../utils';
 
 const Wrapper = styled.aside`
   .mainBody {

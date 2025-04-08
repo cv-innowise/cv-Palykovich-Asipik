@@ -62,9 +62,7 @@ export const Register = () => {
         isSubmitting={loading}
         errorMessage={error ? error.message : null}
       />
-      <CustomButton variant="text">
-        {t('auth.register.extraButton')}
-      </CustomButton>
+      <CustomButton variant="text">{t('auth.register.extraButton')}</CustomButton>
     </ContainerStyled>
   );
 };

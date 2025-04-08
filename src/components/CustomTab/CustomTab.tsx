@@ -32,12 +32,7 @@ export const CustomTab = () => {
   };
 
   return (
-    <StyledTabs
-      value={activeTab}
-      onChange={handleChange}
-      aria-label="auth tabs"
-      centered
-    >
+    <StyledTabs value={activeTab} onChange={handleChange} aria-label="auth tabs" centered>
       <StyledTab value="login" label={t('auth.login.tab')} />
       <StyledTab value="signup" label={t('auth.register.tab')} />
     </StyledTabs>

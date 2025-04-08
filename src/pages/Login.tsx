@@ -60,7 +60,7 @@ export const Login = () => {
       </StyledText>
       <AuthForm
         buttonType="log"
-        onSubmit={handleSubmit}
+        onSubmit={(data: AuthFormInputs) => handleSubmit(data)}
         isSubmitting={loading}
         errorMessage={error ? error.message : null}
       />

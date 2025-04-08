@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { toRem } from "../../utils";
+import styled from 'styled-components';
+import { toRem } from '../../utils';
 
 export const UserLogoContainer = styled.div`
   display: flex;
@@ -28,15 +28,15 @@ export const Circle = styled.div`
 `;
 
 export const Username = styled.span<{ $isOpen: boolean }>`
-  max-width: ${({ $isOpen }) => ($isOpen ? `${toRem(130)}` : "0")};
+  max-width: ${({ $isOpen }) => ($isOpen ? `${toRem(130)}` : '0')};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: max-width 0.3s ease, opacity 0.3s ease;
+  transition:
+    max-width 0.3s ease,
+    opacity 0.3s ease;
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
   @media (max-width: ${toRem(768)}) {
-    max-width: calc(
-      ${toRem(0)} + (130 - 0) * ((100vw - ${toRem(380)}) / (768 - 380))
-    );
+    max-width: calc(${toRem(0)} + (130 - 0) * ((100vw - ${toRem(380)}) / (768 - 380)));
   }
 `;

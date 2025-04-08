@@ -45,16 +45,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, onClose }) => {
         {t('userMenu.profile')}
       </MenuItem>
       <MenuItem onClick={onClose} component={Link} to="/settings">
-        <SettingsIcon
-          style={{ marginRight: 8, color: theme.palette.text.secondary }}
-        />
+        <SettingsIcon style={{ marginRight: 8, color: theme.palette.text.secondary }} />
         {t('userMenu.settings')}
       </MenuItem>
       <Divider />
       <MenuItem onClick={handleLogout} component={Link} to="auth/login">
-        <LogoutIcon
-          style={{ marginRight: 8, color: theme.palette.text.secondary }}
-        />
+        <LogoutIcon style={{ marginRight: 8, color: theme.palette.text.secondary }} />
         {t('userMenu.logout')}
       </MenuItem>
     </Menu>
