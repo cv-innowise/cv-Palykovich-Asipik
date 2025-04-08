@@ -1,63 +1,70 @@
-import { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "../services/queries";
+import { Button, Typography } from '@mui/material';
+import { AuthForm, AuthFormInputs } from '../components';
+import { Container, styled } from '@mui/system';
+import { toRem } from '../utils';
+import { useTranslation } from 'react-i18next';
+import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import { SIGNUP } from '../services/auth/mutation';
 
-const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [registerUser, { data, loading, error }] = useMutation(REGISTER_USER);
+const ContainerStyled = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 560px;
+  padding: 0;
+`;
 
+const CustomButton = styled(Button)`
+  min-width: ${toRem(220)};
+  border-radius: ${toRem(40)};
+  margin-top: ${toRem(8)};
+  color: ${({ theme }) => theme.palette.text.primary};
+`;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const Text = styled(Typography)`
+  margin: ${toRem(24)} 0 ${toRem(40)};
+`;
+
+export const Register = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [signup, { loading, error }] = useMutation(SIGNUP);
+
+  const handleSubmit = async (data: AuthFormInputs) => {
     try {
-      const response = await registerUser({
+      const response = await signup({
         variables: {
-          email,
-          password,
+          auth: {
+            email: data.email,
+            password: data.password,
+          },
         },
       });
-      console.log("Registration successful:", response.data.signup);
+      localStorage.setItem('access_token', response.data.signup.access_token);
+      navigate('/profile');
     } catch (err) {
-      console.error("Registration error:", err);
+      console.error(err);
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Registering..." : "Register"}
-        </button>
-      </form>
-
-      {error && <p>Error: {error.message}</p>}
-      {data && (
-        <div>
-          <h3>Registration Successful!</h3>
-          <p>User ID: {data.signup.user.id}</p>
-          <p>Email: {data.signup.user.email}</p>
-          <p>Verified: {data.signup.user.is_verified ? "Yes" : "No"}</p>
-          <p>Access Token: {data.signup.access_token}</p>
-          <p>Refresh Token: {data.signup.refresh_token}</p>
-        </div>
-      )}
-    </div>
+    <ContainerStyled>
+      <Typography variant="h4" align="center">
+        {t('auth.register.title')}
+      </Typography>
+      <Text variant="subtitle1" align="center">
+        {t('auth.register.text')}
+      </Text>
+      <AuthForm
+        buttonType="reg"
+        onSubmit={handleSubmit}
+        isSubmitting={loading}
+        errorMessage={error ? error.message : null}
+      />
+      <CustomButton variant="text">
+        {t('auth.register.extraButton')}
+      </CustomButton>
+    </ContainerStyled>
   );
 };
-
-export default Register;

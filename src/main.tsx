@@ -1,19 +1,19 @@
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
-import { Provider } from "react-redux";
-import { store } from "./store.ts";
-import { ThemeProvider } from "@mui/material/styles";
-import { useAppSelector } from "./hooks";
-import { darkTheme, lightTheme } from "./utils";
-import { I18nextProvider } from "react-i18next";
-import i18n from "./utils/i18n.ts";
-import { ApolloProvider } from "@apollo/client";
-import client from "./ApolloClient.ts";
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App.tsx';
+import { Provider } from 'react-redux';
+import { store } from './store.ts';
+import { ThemeProvider } from '@mui/material/styles';
+import { useAppSelector } from './hooks';
+import { darkTheme, lightTheme } from './utils';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './locales/i18n.ts';
+import { ApolloProvider } from '@apollo/client';
+import { client } from './services/auth/сlient.ts';
 
-const Root = () => {
+export const Root = () => {
   const theme = useAppSelector((state) => state.themeState.theme);
-  const currentTheme = theme === "dark" ? darkTheme : lightTheme;
+  const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
 
   return (
     <ThemeProvider theme={currentTheme}>
@@ -24,7 +24,7 @@ const Root = () => {
   );
 };
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <ApolloProvider client={client}>
       <Root />
