@@ -5,7 +5,7 @@ import { toRem } from '../utils';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { SIGNUP } from '../services/mutations/mutations';
+import { SIGNUP } from '../services/auth/mutation';
 
 const ContainerStyled = styled(Container)`
   display: flex;
@@ -42,9 +42,9 @@ export const Register = () => {
         },
       });
       localStorage.setItem('access_token', response.data.signup.access_token);
-      navigate('/');
+      navigate('/profile');
     } catch (err) {
-      console.error('Ошибка регистрации:', err);
+      console.error(err);
     }
   };
 

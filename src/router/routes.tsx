@@ -11,45 +11,50 @@ import {
   Login,
   Register,
 } from '../pages';
-import { ErrorElement } from '../components';
+import { ErrorElement, ProtectedRoute } from '../components';
 import { HomeLayout } from '../pages';
 import { AuthLayout } from '../pages';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomeLayout />,
+    element: <ProtectedRoute />,
     errorElement: <Error />,
     children: [
       {
-        index: true,
-        element: <Employees />,
-        errorElement: <ErrorElement />,
-      },
-      {
-        path: 'skills',
-        element: <Skills />,
-        errorElement: <ErrorElement />,
-      },
-      {
-        path: 'languages',
-        element: <Languages />,
-        errorElement: <ErrorElement />,
-      },
-      {
-        path: 'cvs',
-        element: <CVs />,
-        errorElement: <ErrorElement />,
-      },
-      {
-        path: 'settings',
-        element: <Settings />,
-        errorElement: <ErrorElement />,
-      },
-      {
-        path: 'profile',
-        element: <Profile />,
-        errorElement: <ErrorElement />,
+        element: <HomeLayout />,
+        children: [
+          {
+            index: true,
+            element: <Employees />,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: 'skills',
+            element: <Skills />,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: 'languages',
+            element: <Languages />,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: 'cvs',
+            element: <CVs />,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: 'settings',
+            element: <Settings />,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: 'profile',
+            element: <Profile />,
+            errorElement: <ErrorElement />,
+          },
+        ],
       },
     ],
   },
@@ -64,7 +69,7 @@ export const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: 'register',
+        path: 'signup',
         element: <Register />,
         errorElement: <Error />,
       },

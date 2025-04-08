@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
@@ -15,7 +15,7 @@ interface AuthFormProps {
   buttonType: 'reg' | 'log';
   onSubmit: (data: AuthFormInputs) => void;
   isSubmitting?: boolean;
-  errorMessage?: string | null;
+  errorMessage: string | null;
 }
 
 export interface AuthFormInputs {
@@ -31,6 +31,13 @@ export const AuthForm = ({
 }: AuthFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
+  const [formError, setFormError] = useState<string | null>(
+    errorMessage ?? null
+  );
+
+  useEffect(() => {
+    setFormError(errorMessage);
+  }, [errorMessage]);
 
   const {
     register,
@@ -44,13 +51,12 @@ export const AuthForm = ({
     onSubmit(data);
   };
 
+  const handleFocus = () => {
+    setFormError(null);
+  };
+
   return (
     <StyledAuthBox>
-      {errorMessage && (
-        <Typography color="error" align="center">
-          {errorMessage}
-        </Typography>
-      )}
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <TextField
           label={t('auth.form.email')}
@@ -64,6 +70,7 @@ export const AuthForm = ({
           })}
           error={!!errors.email}
           helperText={errors.email?.message}
+          onFocus={handleFocus}
         />
         <TextField
           label={t('auth.form.password')}
@@ -78,6 +85,7 @@ export const AuthForm = ({
           })}
           error={!!errors.password}
           helperText={errors.password?.message}
+          onFocus={handleFocus}
           slotProps={{
             input: {
               endAdornment: (
@@ -94,7 +102,11 @@ export const AuthForm = ({
             },
           }}
         />
-
+        {formError && (
+          <Typography color="error" align="center">
+            {formError}
+          </Typography>
+        )}
         <Button
           type="submit"
           variant="contained"

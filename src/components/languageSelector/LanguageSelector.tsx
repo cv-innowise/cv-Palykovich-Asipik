@@ -1,7 +1,6 @@
 import { Select, MenuItem, InputLabel, SelectChangeEvent } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setLanguage } from '../../features/language/languageSlice';
-// import i18n from "../../utils/i18n";
 import { useTranslation } from 'react-i18next';
 import { FormControlStyled } from './LanguageSelectorWrapper';
 import i18n from '../../locales/i18n';

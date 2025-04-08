@@ -25,10 +25,9 @@ export const CustomTab = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const activeTab =
-    location.pathname === '/auth/register' ? 'register' : 'login';
+  const activeTab = location.pathname === '/auth/signup' ? 'signup' : 'login';
 
-  const handleChange = (_: SyntheticEvent, newValue: 'login' | 'register') => {
+  const handleChange = (_: SyntheticEvent, newValue: 'login' | 'signup') => {
     navigate(`/auth/${newValue}`);
   };
 
@@ -40,7 +39,7 @@ export const CustomTab = () => {
       centered
     >
       <StyledTab value="login" label={t('auth.login.tab')} />
-      <StyledTab value="register" label={t('auth.register.tab')} />
+      <StyledTab value="signup" label={t('auth.register.tab')} />
     </StyledTabs>
   );
 };

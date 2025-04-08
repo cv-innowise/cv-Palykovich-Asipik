@@ -6,3 +6,4 @@ export { default as ThemeSelector } from './ThemeSelector/ThemeSelector';
 export { default as LanguageSelector } from './LanguageSelector/LanguageSelector';
 export * from './CustomTab/CustomTab';
 export * from './AuthForm/AuthForm';
+export * from './ProtectedRoute/ProtectedRoute';

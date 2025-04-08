@@ -4,7 +4,8 @@ import { Container, styled } from '@mui/system';
 import { toRem } from '../utils';
 import { useTranslation } from 'react-i18next';
 import { useLazyQuery } from '@apollo/client';
-import { LOGIN } from '../services/queries/login';
+import { LOGIN } from '../services/auth/query';
+import { useNavigate } from 'react-router-dom';
 
 const StyledContainer = styled(Container)`
   display: flex;
@@ -27,12 +28,11 @@ const StyledText = styled(Typography)`
 
 export const Login = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [login, { loading, error }] = useLazyQuery(LOGIN);
 
   const handleSubmit = async (data: AuthFormInputs) => {
-    console.log(data);
-
     try {
       const response = await login({
         variables: {
@@ -43,11 +43,10 @@ export const Login = () => {
       if (response.data) {
         const { access_token } = response.data.login;
         localStorage.setItem('access_token', access_token);
-        console.log('enter');
-        // navigate('/'); // Перенаправление после успешного логина
+        navigate('/profile');
       }
     } catch (err) {
-      console.error('Ошибка входа:', err);
+      console.error(err);
     }
   };
 

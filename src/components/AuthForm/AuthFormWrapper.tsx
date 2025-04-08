@@ -17,4 +17,8 @@ export const StyledAuthBox = styled(Box)`
     margin: ${toRem(40)} auto 0;
     border-radius: ${toRem(40)};
   }
+
+  && input + div {
+    margin-right: 10px;
+  }
 `;
