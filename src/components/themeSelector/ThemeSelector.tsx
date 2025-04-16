@@ -2,7 +2,7 @@ import React from 'react';
 import { Select, MenuItem, InputLabel, SelectChangeEvent } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setTheme } from '../../features/theme/themeSlice';
-import { FormControlStyled } from './ThemeSelectorWrapper';
+import { FormControlStyled } from './ThemeSelector.styled';
 import { useTranslation } from 'react-i18next';
 
 interface ThemeSelectorProps {

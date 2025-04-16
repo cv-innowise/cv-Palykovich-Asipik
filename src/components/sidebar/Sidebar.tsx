@@ -13,7 +13,7 @@ import ListItemText from '@mui/material/ListItemText';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { NavLink } from 'react-router-dom';
 import { links } from '../../utils';
-import Wrapper from './SidebarWrapper';
+import Wrapper from './Sidebar.styled';
 import UserLogo from '../UserLogo/UserLogo';
 import UserMenu from '../UserMenu/UserMenu';
 import { useTheme } from '@mui/material';

@@ -12,7 +12,7 @@ import { rows } from './data';
 import { useMemo, useState } from 'react';
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { StyledTableContainer } from './dataTable.style';
+import { StyledTableContainer } from './DataTable.styled';
 // import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export interface User {

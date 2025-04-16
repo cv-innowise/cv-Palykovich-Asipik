@@ -1,6 +1,6 @@
 import { useRouteError } from 'react-router-dom';
 import { Typography, useTheme } from '@mui/material';
-import { ErrorContainer } from './ErrorElementWrapper';
+import { ErrorContainer } from './ErrorElement.styled';
 
 const ErrorElement = () => {
   const error = useRouteError();

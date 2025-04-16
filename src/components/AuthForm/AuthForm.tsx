@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { TextField, Button, Typography, InputAdornment, IconButton } from '@mui/material';
-import { StyledAuthBox } from './AuthFormWrapper';
+import { StyledAuthBox } from './AuthForm.styled';
 import { useTranslation } from 'react-i18next';
 
 interface AuthFormProps {
