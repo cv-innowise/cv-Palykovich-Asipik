@@ -7,11 +7,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-import { rows } from './data';
 import { useMemo, useState } from 'react';
 
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { StyledTableContainer } from './DataTable.styled';
+import { StyledTableContainer } from './EmployeesTable.styled';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useNavigate } from 'react-router-dom';
 
@@ -98,7 +97,7 @@ function SimpleTableHead(props: SimpleTableHeadProps) {
   );
 }
 
-export const EmployeesTable = () => {
+export const EmployeesTable = ({ data }: { data: User[] }) => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<string>('departmentName');
   const navigate = useNavigate();
@@ -109,7 +108,10 @@ export const EmployeesTable = () => {
     setOrderBy(property);
   };
 
-  const sortedRows = useMemo(() => [...rows].sort(getComparator(order, orderBy)), [order, orderBy]);
+  const sortedData = useMemo(
+    () => [...data].sort(getComparator(order, orderBy)),
+    [data, order, orderBy]
+  );
 
   const handleRowButtonClick = (id: number) => () => {
     console.log('Clicked ID:', id);
@@ -121,15 +123,13 @@ export const EmployeesTable = () => {
       <Table aria-labelledby="employeesTable">
         <SimpleTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
         <TableBody>
-          {sortedRows.map((row) => {
+          {sortedData.map((row) => {
             return (
               <TableRow key={row.id}>
                 <TableCell>
                   <Avatar alt={row.profile.firstName} src={row.profile.avatar} />
                 </TableCell>
-                <TableCell component="th" scope="row">
-                  {row.profile.fullName}
-                </TableCell>
+                <TableCell>{row.profile.fullName}</TableCell>
                 <TableCell>{row.email}</TableCell>
                 <TableCell>{row.positionName}</TableCell>
                 <TableCell>{row.role}</TableCell>

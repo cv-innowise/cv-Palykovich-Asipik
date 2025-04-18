@@ -1,15 +1,9 @@
-import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-// function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-//   event.preventDefault();
-//   console.info('You clicked a breadcrumb.');
-// }
+import MuiLink from '@mui/material/Link';
+import { StyledBreadcrumbs } from './CostomBreadcrumbs.styled';
 
 export const CustomBreadcrumbs = () => {
   let location = useLocation();
@@ -18,25 +12,55 @@ export const CustomBreadcrumbs = () => {
 
   const pathnames = location.pathname.split('/').filter((x) => x);
 
-  const link = location.pathname.split('/')[1];
-  const pageName = link === 'users' ? 'employees' : link;
+  if (pathnames.length === 0) {
+    return (
+      <StyledBreadcrumbs aria-label="breadcrumb" separator=">" sx={{ mb: 2 }}>
+        <Typography sx={{ color: 'text.primary', display: 'flex', alignItems: 'center' }}>
+          {t('links.home')}
+        </Typography>
+      </StyledBreadcrumbs>
+    );
+  }
 
   return (
-    // <div role="presentation" onClick={handleClick}>
-    <Breadcrumbs aria-label="breadcrumb">
-      <Link
-        underline="hover"
-        sx={{ display: 'flex', alignItems: 'center' }}
-        color="inherit"
-        href={`/${link}`}
-      >
-        {t(`links.${pageName}`)}
-      </Link>
-      <Typography sx={{ color: 'text.primary', display: 'flex', alignItems: 'center' }}>
-        <PermIdentityIcon />
-        Breadcrumb
-      </Typography>
-    </Breadcrumbs>
-    // </div>
+    <StyledBreadcrumbs aria-label="breadcrumb" separator=">">
+      {pathnames.map((value, index) => {
+        const last = index === pathnames.length - 1;
+        const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+        const displayName = value === 'users' ? 'employees' : value;
+        const translatedName = t(`links.${displayName}`, { defaultValue: displayName });
+        const isUserSegment = value === 'users' || (index > 0 && pathnames[index - 1] === 'users');
+
+        return last ? (
+          <Typography
+            key={to}
+            sx={{
+              color: 'primary.main',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            {isUserSegment && pathnames.length > 1 && <PermIdentityIcon sx={{ mr: 0.5 }} />}
+            {translatedName}
+          </Typography>
+        ) : (
+          <MuiLink
+            key={to}
+            component={RouterLink}
+            underline="hover"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              '&:hover': { color: 'primary.main' },
+            }}
+            color="inherit"
+            to={to}
+            aria-label={translatedName}
+          >
+            {translatedName}
+          </MuiLink>
+        );
+      })}
+    </StyledBreadcrumbs>
   );
 };

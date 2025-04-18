@@ -43,7 +43,7 @@ export const Login = () => {
       if (response.data) {
         const { access_token } = response.data.login;
         localStorage.setItem('access_token', access_token);
-        navigate('/profile');
+        navigate('/users');
       }
     } catch (err) {
       console.error(err);
