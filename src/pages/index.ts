@@ -2,6 +2,7 @@ export * from './Register';
 export * from './Login';
 export * from './layouts/HomeLayout';
 export * from './layouts/AuthLayout';
+export * from './layouts/EmployeesLayout';
 export { default as Employees } from './Employees';
 export { default as Skills } from './Skills';
 export { default as Languages } from './Languages';

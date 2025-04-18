@@ -11,7 +11,7 @@ type Links = {
 };
 
 export const links: Links[] = [
-  { titleKey: 'links.employees', url: '/', icon: GroupIcon },
+  { titleKey: 'links.employees', url: '/users', icon: GroupIcon },
   { titleKey: 'links.skills', url: '/skills', icon: TrendingUpIcon },
   { titleKey: 'links.languages', url: '/languages', icon: TranslateIcon },
   {

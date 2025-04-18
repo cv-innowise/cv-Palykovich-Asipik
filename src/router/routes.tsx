@@ -12,8 +12,7 @@ import {
   Register,
 } from '../pages';
 import { ErrorElement, ProtectedRoute } from '../components';
-import { HomeLayout } from '../pages';
-import { AuthLayout } from '../pages';
+import { HomeLayout, AuthLayout, EmployeesLayout } from '../pages';
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +27,21 @@ export const router = createBrowserRouter([
             index: true,
             element: <Employees />,
             errorElement: <ErrorElement />,
+          },
+          {
+            path: 'users',
+            element: <EmployeesLayout />,
+            errorElement: <ErrorElement />,
+            children: [
+              {
+                index: true,
+                element: <Employees />,
+              },
+              {
+                path: ':userId',
+                element: <Profile />,
+              },
+            ],
           },
           {
             path: 'skills',
@@ -47,11 +61,6 @@ export const router = createBrowserRouter([
           {
             path: 'settings',
             element: <Settings />,
-            errorElement: <ErrorElement />,
-          },
-          {
-            path: 'profile',
-            element: <Profile />,
             errorElement: <ErrorElement />,
           },
         ],

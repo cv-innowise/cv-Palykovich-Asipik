@@ -3,7 +3,6 @@ import { Avatar, Box, IconButton } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
@@ -11,9 +10,10 @@ import { visuallyHidden } from '@mui/utils';
 import { rows } from './data';
 import { useMemo, useState } from 'react';
 
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { StyledTableContainer } from './DataTable.styled';
-// import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useNavigate } from 'react-router-dom';
 
 export interface User {
   id: number;
@@ -101,6 +101,7 @@ function SimpleTableHead(props: SimpleTableHeadProps) {
 export const EmployeesTable = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<string>('departmentName');
+  const navigate = useNavigate();
 
   const handleRequestSort = (_event: React.MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -110,13 +111,17 @@ export const EmployeesTable = () => {
 
   const sortedRows = useMemo(() => [...rows].sort(getComparator(order, orderBy)), [order, orderBy]);
 
+  const handleRowButtonClick = (id: number) => () => {
+    console.log('Clicked ID:', id);
+    navigate(`/users/${id}`);
+  };
+
   return (
     <StyledTableContainer>
       <Table aria-labelledby="employeesTable">
         <SimpleTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
         <TableBody>
           {sortedRows.map((row) => {
-            console.log(row.profile.avatar);
             return (
               <TableRow key={row.id}>
                 <TableCell>
@@ -130,8 +135,8 @@ export const EmployeesTable = () => {
                 <TableCell>{row.role}</TableCell>
                 <TableCell>{row.departmentName}</TableCell>
                 <TableCell>
-                  <IconButton>
-                    <MoreVertIcon />
+                  <IconButton onClick={handleRowButtonClick(row.id)}>
+                    <ArrowForwardIosIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>
