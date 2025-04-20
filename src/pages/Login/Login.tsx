@@ -1,35 +1,14 @@
-import { Button, Typography } from '@mui/material';
-import { AuthForm, AuthFormInputs } from '../components';
-import { Container, styled } from '@mui/system';
-import { toRem } from '../utils';
+import { Typography } from '@mui/material';
+import { AuthForm, AuthFormInputs } from '../../components';
 import { useTranslation } from 'react-i18next';
 import { useLazyQuery } from '@apollo/client';
-import { LOGIN } from '../services/auth/query';
+import { LOGIN } from '../../services/auth/query';
 import { useNavigate } from 'react-router-dom';
-
-const StyledContainer = styled(Container)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: ${toRem(560)};
-  padding: 0;
-`;
-
-const StyledButton = styled(Button)`
-  min-width: ${toRem(220)};
-  border-radius: ${toRem(40)};
-  margin-top: ${toRem(8)};
-  color: ${({ theme }) => theme.palette.text.primary};
-`;
-
-const StyledText = styled(Typography)`
-  margin: ${toRem(24)} 0 ${toRem(40)};
-`;
+import { StyledButton, StyledContainer, StyledText } from './Login.styled';
 
 export const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const [login, { loading, error }] = useLazyQuery(LOGIN);
 
   const handleSubmit = async (data: AuthFormInputs) => {
@@ -41,8 +20,9 @@ export const Login = () => {
         },
       });
       if (response.data) {
-        const { access_token } = response.data.login;
+        const { access_token, user } = response.data.login;
         localStorage.setItem('access_token', access_token);
+        localStorage.setItem('user_id', user.id);
         navigate('/users');
       }
     } catch (err) {

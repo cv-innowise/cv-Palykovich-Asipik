@@ -1,5 +1,5 @@
-export * from './Register';
-export * from './Login';
+export * from './Register/Register';
+export * from './Login/Login';
 export * from './layouts/HomeLayout';
 export * from './layouts/AuthLayout';
 export * from './layouts/EmployeesLayout';

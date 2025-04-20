@@ -9,7 +9,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import { useMemo, useState } from 'react';
 
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { StyledTableContainer } from './EmployeesTable.styled';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useNavigate } from 'react-router-dom';
@@ -55,13 +55,13 @@ const headCells: HeadCell[] = [
   { id: 'manage', label: '' },
 ];
 
-interface SimpleTableHeadProps {
+interface EmployeesTableHeadProps {
   order: Order;
   orderBy: string;
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
 }
 
-function SimpleTableHead(props: SimpleTableHeadProps) {
+function EmployeesTableHead(props: EmployeesTableHeadProps) {
   const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
@@ -108,22 +108,30 @@ export const EmployeesTable = ({ data }: { data: User[] }) => {
     setOrderBy(property);
   };
 
-  const sortedData = useMemo(
-    () => [...data].sort(getComparator(order, orderBy)),
-    [data, order, orderBy]
-  );
+  const sortedData = useMemo(() => {
+    const currentUserId = localStorage.getItem('user_id');
+
+    const [currentUser, otherUsers] = data.reduce<[User | undefined, User[]]>(
+      ([found, others], user) =>
+        user.id.toString() === currentUserId ? [user, others] : [found, [...others, user]],
+      [undefined, []]
+    );
+
+    const sortedOtherUsers = otherUsers.sort(getComparator(order, orderBy));
+
+    return currentUser ? [currentUser, ...sortedOtherUsers] : sortedOtherUsers;
+  }, [data, order, orderBy]);
 
   const handleRowButtonClick = (id: number) => () => {
-    console.log('Clicked ID:', id);
     navigate(`/users/${id}`);
   };
 
   return (
     <StyledTableContainer>
       <Table aria-labelledby="employeesTable">
-        <SimpleTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
+        <EmployeesTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
         <TableBody>
-          {sortedData.map((row) => {
+          {sortedData.map((row, index) => {
             return (
               <TableRow key={row.id}>
                 <TableCell>
@@ -135,9 +143,15 @@ export const EmployeesTable = ({ data }: { data: User[] }) => {
                 <TableCell>{row.role}</TableCell>
                 <TableCell>{row.departmentName}</TableCell>
                 <TableCell>
-                  <IconButton onClick={handleRowButtonClick(row.id)}>
-                    <ArrowForwardIosIcon />
-                  </IconButton>
+                  {index == 0 ? (
+                    <IconButton onClick={handleRowButtonClick(row.id)}>
+                      <MoreVertIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton onClick={handleRowButtonClick(row.id)}>
+                      <ArrowForwardIosIcon />
+                    </IconButton>
+                  )}
                 </TableCell>
               </TableRow>
             );
