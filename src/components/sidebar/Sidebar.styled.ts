@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import { styled as muiStyled, Theme, CSSObject } from '@mui/material/styles';
+import MuiDrawer from '@mui/material/Drawer';
 import { toRem } from '../../utils';
 
-const Wrapper = styled.aside`
+export const Wrapper = styled.aside`
   .mainBody {
     display: flex;
   }
@@ -80,4 +82,55 @@ const Wrapper = styled.aside`
   }
 `;
 
-export default Wrapper;
+const drawerWidth = 12.5;
+
+export const openedMixin = (theme: Theme): CSSObject => ({
+  width: `${drawerWidth}rem`,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+  border: 'none',
+});
+
+export const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 0.0625rem)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 0.0625rem)`,
+  },
+  border: 'none',
+});
+
+export const Drawer = muiStyled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme }) => ({
+  width: `${drawerWidth}rem`,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  '& .MuiDrawer-paper': {
+    backgroundColor: theme.palette.background.default,
+  },
+  variants: [
+    {
+      props: { open: true },
+      style: {
+        ...openedMixin(theme),
+        '& .MuiDrawer-paper': openedMixin(theme),
+      },
+    },
+    {
+      props: { open: false },
+      style: {
+        ...closedMixin(theme),
+        '& .MuiDrawer-paper': closedMixin(theme),
+      },
+    },
+  ],
+}));

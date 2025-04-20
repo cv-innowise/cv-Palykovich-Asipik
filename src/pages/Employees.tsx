@@ -4,7 +4,6 @@ import { EmployeesTable } from '../components';
 
 export const Employees = () => {
   const { data } = useQuery(GET_ALL_EMPLOYEES);
-  console.log(data);
 
   return (
     <>

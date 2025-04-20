@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { styled, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -13,70 +11,19 @@ import ListItemText from '@mui/material/ListItemText';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { NavLink } from 'react-router-dom';
 import { links } from '../../utils';
-import Wrapper from './Sidebar.styled';
 import UserLogo from '../UserLogo/UserLogo';
 import UserMenu from '../UserMenu/UserMenu';
 import { useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-const drawerWidth = 12.5;
-
-const openedMixin = (theme: Theme): CSSObject => ({
-  width: `${drawerWidth}rem`,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-  border: 'none',
-});
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 0.0625rem)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 0.0625rem)`,
-  },
-  border: 'none',
-});
-
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme }) => ({
-  width: `${drawerWidth}rem`,
-  flexShrink: 0,
-  whiteSpace: 'nowrap',
-  boxSizing: 'border-box',
-  '& .MuiDrawer-paper': {
-    backgroundColor: theme.palette.background.default,
-  },
-  variants: [
-    {
-      props: { open: true },
-      style: {
-        ...openedMixin(theme),
-        '& .MuiDrawer-paper': openedMixin(theme),
-      },
-    },
-    {
-      props: { open: false },
-      style: {
-        ...closedMixin(theme),
-        '& .MuiDrawer-paper': closedMixin(theme),
-      },
-    },
-  ],
-}));
+import { Drawer, Wrapper } from './Sidebar.styled';
+import { useCurrentUser } from '../../hooks/hooks';
 
 export default function Sidebar() {
   const [open, setOpen] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const theme = useTheme();
   const { t } = useTranslation();
+  const { user } = useCurrentUser();
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -110,7 +57,7 @@ export default function Sidebar() {
                       sx={{
                         backgroundColor: isActive ? theme.palette.action.selected : 'transparent',
                         '&:hover': {
-                          backgroundColor: theme.palette.action.hover, // Цвет фона при наведении
+                          backgroundColor: theme.palette.action.hover,
                         },
                       }}
                       className="listItemButton"
@@ -149,7 +96,11 @@ export default function Sidebar() {
               }}
               className="listItemButton"
             >
-              <UserLogo username="Anatoli Paliukhovich" isOpen={open} />
+              <UserLogo
+                username={user?.profile?.fullName ?? 'user'}
+                isOpen={open}
+                imageUrl={user?.profile?.avatar}
+              />
             </ListItemButton>
           </ListItem>
 
@@ -182,7 +133,7 @@ export default function Sidebar() {
                     sx={{
                       backgroundColor: isActive ? theme.palette.action.selected : 'transparent',
                       transition: theme.transitions.create('background-color', {
-                        duration: theme.transitions.duration.short, // Плавный переход
+                        duration: theme.transitions.duration.short,
                       }),
                       marginTop: '8px',
                     }}
@@ -225,7 +176,12 @@ export default function Sidebar() {
                 }}
                 className="iconButtonBottomBar"
               >
-                <UserLogo username="Anatoli Paliukhovich" isOpen={open} imageUrl="" />
+                <div>{user?.profile?.fullName}</div>
+                <UserLogo
+                  username={user?.profile?.fullName ?? 'user'}
+                  isOpen={open}
+                  imageUrl={user?.profile?.avatar}
+                />
               </ListItemButton>
             </ListItem>
           </List>

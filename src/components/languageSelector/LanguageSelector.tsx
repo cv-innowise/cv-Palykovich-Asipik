@@ -1,5 +1,5 @@
 import { Select, MenuItem, InputLabel, SelectChangeEvent } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { setLanguage } from '../../features/language/languageSlice';
 import { useTranslation } from 'react-i18next';
 import { FormControlStyled } from './LanguageSelector.styled';

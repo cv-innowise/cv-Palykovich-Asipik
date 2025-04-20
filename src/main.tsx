@@ -4,7 +4,7 @@ import App from './App.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store.ts';
 import { ThemeProvider } from '@mui/material/styles';
-import { useAppSelector } from './hooks';
+import { useAppSelector } from './hooks/hooks.ts';
 import { darkTheme, lightTheme } from './utils';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './locales/i18n.ts';
